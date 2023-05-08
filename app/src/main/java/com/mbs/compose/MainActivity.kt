@@ -60,14 +60,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
     ComposeTheme {
-        Surface(color = MaterialTheme.colorScheme.background,
-        modifier = Modifier.fillMaxSize()) {
+        Surface(
+            color = MaterialTheme.colorScheme.background,
+            modifier = Modifier.fillMaxSize()
+        ) {
             Column() {
                 content()
             }
         }
     }
 }
+
 @Composable
 fun TopHeader(totalPerPerson: Float) {
 
@@ -171,68 +174,73 @@ fun BillForm(
                     keyboardController?.hide()
                 }
             )
-            Row(
-                Modifier.padding(3.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Split",
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-                Spacer(modifier = Modifier.width(120.dp))
+            if (validState) {
+
+
                 Row(
-                    modifier = Modifier.padding(horizontal = 3.dp),
-                    horizontalArrangement = Arrangement.End
+                    Modifier.padding(3.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    RoundIconButton(imageVector = Icons.Default.Remove,
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        onClick = {
-                            if (splitValue > 1) splitValue--
-                        })
-
                     Text(
-                        text = "$splitValue",
-                        modifier = Modifier
-                            .align(CenterVertically)
-                            .padding(horizontal = 9.dp)
+                        text = "Split",
+                        modifier = Modifier.align(Alignment.CenterVertically)
                     )
+                    Spacer(modifier = Modifier.width(120.dp))
+                    Row(
+                        modifier = Modifier.padding(horizontal = 3.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        RoundIconButton(imageVector = Icons.Default.Remove,
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            onClick = {
+                                if (splitValue > 1) splitValue--
+                            })
 
-                    RoundIconButton(imageVector = Icons.Default.Add,
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        onClick = { splitValue++ })
+                        Text(
+                            text = "$splitValue",
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .padding(horizontal = 9.dp)
+                        )
+
+                        RoundIconButton(imageVector = Icons.Default.Add,
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            onClick = { splitValue++ })
+                    }
                 }
-            }
-            Row(modifier = Modifier.padding(horizontal = 3.dp, vertical = 12.dp)) {
-                Text(
-                    text = "Tip",
-                    modifier = Modifier.align(CenterVertically)
-                )
-                Spacer(modifier = Modifier.width(200.dp))
-                Text(
-                    text = "$${"%.2f".format(tip)}",
-                    modifier = Modifier.align(CenterVertically)
-                )
-            }
-            Column(
-                horizontalAlignment = CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "${(sliderPositionState * 100).toInt()}%"
-                )
-                Spacer(modifier = Modifier.width(14.dp))
+                Row(modifier = Modifier.padding(horizontal = 3.dp, vertical = 12.dp)) {
+                    Text(
+                        text = "Tip",
+                        modifier = Modifier.align(CenterVertically)
+                    )
+                    Spacer(modifier = Modifier.width(200.dp))
+                    Text(
+                        text = "$${"%.2f".format(tip)}",
+                        modifier = Modifier.align(CenterVertically)
+                    )
+                }
+                Column(
+                    horizontalAlignment = CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "${(sliderPositionState * 100).toInt()}%"
+                    )
+                    Spacer(modifier = Modifier.width(14.dp))
 
-                Slider(
-                    value = sliderPositionState, onValueChange = { newValue ->
-                        sliderPositionState = newValue
-                    },
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
+                    Slider(
+                        value = sliderPositionState, onValueChange = { newValue ->
+                            sliderPositionState = newValue
+                        },
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                }
             }
         }
     }
 }
+
 
 
 
